@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 
 import App from './components/app';
 import PostsIndex from './components/posts_index'
@@ -7,6 +7,7 @@ import PostsNew from './components/posts_new'
 import PostsShow from './components/posts_show'
 import ConversationsIndex from './components/conversations_index'
 import ConversationsShow from './components/conversations_show'
+import CommentsNew from './components/comments_new'
 // import ItinerariesNew from './components/itineraries_new'
 // import LoginForm from './components/login_form'
 // import SignUpForm from './components/sign_up_form'
@@ -24,9 +25,11 @@ import ConversationsShow from './components/conversations_show'
 
 export default (
   <Route path="/" component={App} >
-    <Route path="/posts" component={ PostsIndex } />
+    <IndexRoute component={ PostsIndex } />
     <Route path="/posts/new" component={ PostsNew } />
-    <Route path="/posts/:id" component={ PostsShow } />
+    <Route path="/posts/:id" component={ PostsShow } >
+      <Route path="/posts/:id/newmessage" component={ CommentsNew } />
+    </Route>
     <Route path="/conversations" component={ ConversationsIndex } >
       <Route path="/conversations/:id" component={ ConversationsShow } />
     </Route>

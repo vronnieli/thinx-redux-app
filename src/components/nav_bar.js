@@ -17,7 +17,7 @@ export default function NavBar(props){
         </Navbar.Text>
         <Nav pullRight>
           <NavItem href="/conversations"><Glyphicon glyph="envelope" />  Messages</NavItem>
-          <NavDropdown title={<Glyphicon glyph="user" />}>
+          <NavDropdown id="dropdown" title={<Glyphicon glyph="user" />}>
             <MenuItem href="/logout"><Glyphicon glyph="log-out" />  Logout</MenuItem>
           </NavDropdown>
         </Nav>

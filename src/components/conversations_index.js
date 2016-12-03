@@ -1,40 +1,84 @@
 import React from 'react';
+import * as actions from '../actions/index';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import { Grid, Col, ListGroup, ListGroupItem, Badge } from 'react-bootstrap';
+import { Grid, Row, Col, Well, ListGroup, ListGroupItem, Badge, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
 
-function PostsIndex (props) {
+class ConversationsIndex extends React.Component {
+  constructor(props){
+    super(props);
+    this.renderUsernames = this.renderUsernames.bind(this)
+    this.renderConversations = this.renderConversations.bind(this)
+    this.renderAllUsernames = this.renderAllUsernames.bind(this)
+    this.onSubmitHandler = this.onSubmitHandler.bind(this)
+  };
 
-  const renderUsernames = (user) => {
+  onSubmitHandler(event) {
+    event.preventDefault()
+    const userId = event.target[0].value
+    //const me = this.current_user.id
+    this.props.actions.createConversation({conversation: {user_id: userId}})
+  }
+
+  renderAllUsernames(user) {
+    return <option value={user.id}>{user.username}</option>
+  }
+
+  renderUsernames(user) {
     return user.username + ","
   }
 
-  const renderConversations = (conversation) => {
+  renderConversations(conversation) {
     return (
       <ListGroupItem href={'/conversations/' + conversation.id}>
-        <h5>{conversation.users.map(renderUsernames)} <Badge>{conversation.messages.length}</Badge></h5>
+        <h5>{conversation.users.map(this.renderUsernames)} <Badge>{conversation.messages.length}</Badge></h5>
       </ListGroupItem>
     )
   };
 
-  return (
-    <Grid>
-      <Col xs={12} md={3} >
-        <ListGroup>
-          {props.conversations.map(renderConversations)}
-        </ListGroup>
-      </Col>
-      {props.children}
-    </Grid>
-  )
+  render() {
+    return (
+      <Grid>
+        <Row>
+          <Col xs={12} md={3} >
+            <Well>
+              <Form inline onSubmit={this.onSubmitHandler} >
+                <FormGroup>
+                  <strong>Chat with </strong>
+                  <FormControl componentClass="select" placeholder="Select User" >
+                    {this.props.users.map(this.renderAllUsernames)}
+                  </FormControl>
+                  <Button bsStyle="primary" bsSize="small" type="submit">Start</Button>
+                </FormGroup>
+              </Form>
+            </Well>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={3} >
+            <ListGroup>
+              {this.props.conversations.map(this.renderConversations)}
+            </ListGroup>
+          </Col>
+          {this.props.children}
+        </Row>
+      </Grid>
+    )
+  }
 
 };
 
 function mapStateToProps(state){
   return {
-    conversations: state.conversations
+    conversations: state.conversations,
+    users: state.users
   };
 };
 
-const componentCreator = connect(mapStateToProps);
-export default componentCreator(PostsIndex);
+function mapDispatchToProps(dispatch) {
+  return {actions: bindActionCreators(actions, dispatch)}
+}
+
+const componentCreator = connect(mapStateToProps, mapDispatchToProps)
+export default componentCreator(ConversationsIndex)

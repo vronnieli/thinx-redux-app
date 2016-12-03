@@ -17,6 +17,14 @@ export function fetchConversations(){
   }
 };
 
+export function fetchUsers(){
+  const users = fetch(`${BASE_URL}users`).then((response) => {return response.json()}).then((usersPayload) => {return usersPayload})
+  return {
+    type: 'FETCH_USERS',
+    payload: users
+  }
+};
+
 export function createPost(params){
   debugger;
   const post = fetch(`${BASE_URL}/cocktails`,
@@ -36,8 +44,7 @@ export function createPost(params){
 }
 
 export function createMessage(params){
-  debugger;
-  const message = fetch(`${BASE_URL}/messages`,
+  const message = fetch(`${BASE_URL}messages`,
     {
       method: 'POST',
       body: JSON.stringify(params),
@@ -50,5 +57,39 @@ export function createMessage(params){
   return {
     type: 'CREATE_MESSAGE',
     payload: message
+  }
+}
+
+export function createComment(params){
+  const comment = fetch(`${BASE_URL}comments`,
+    {
+      method: 'POST',
+      body: JSON.stringify(params),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {return response.json()}).then((commentPayload) => {return commentPayload});
+
+  return {
+    type: 'CREATE_COMMENT',
+    payload: comment
+  }
+}
+
+export function createConversation(params){
+  const conversation = fetch(`${BASE_URL}conversations`,
+    {
+      method: 'POST',
+      body: JSON.stringify(params),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {return response.json()}).then((conversationPayload) => {return conversationPayload});
+
+  return {
+    type: 'CREATE_CONVERSATION',
+    payload: conversation
   }
 }
