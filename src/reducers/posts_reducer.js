@@ -8,7 +8,7 @@ export default function postsReducer(state=[], action) {
       browserHistory.push(`/posts/${action.payload.id}`)
       return [...state, action.payload];
     case 'UPDATE_POST':
-      window.location.href = `/posts/${action.id}`
+      window.location.href = "/"
       return action.payload
     default:
       return state;
