@@ -2,6 +2,7 @@ import React from 'react';
 import * as actions from '../actions/index';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {Link} from 'react-router';
 
 import { Grid, Row, Col, Well, ListGroup, ListGroupItem, Badge, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
 
@@ -17,7 +18,6 @@ class ConversationsIndex extends React.Component {
   onSubmitHandler(event) {
     event.preventDefault()
     const userId = event.target[0].value
-    //const me = this.current_user.id
     this.props.actions.createConversation({conversation: {user_id: userId}})
   }
 
@@ -26,16 +26,19 @@ class ConversationsIndex extends React.Component {
   }
 
   renderUsernames(user) {
-    return user.username + ","
+    return user.username + " "
   }
 
   renderConversations(conversation) {
     return (
-      <ListGroupItem href={'/conversations/' + conversation.id}>
-        <h5>{conversation.users.map(this.renderUsernames)} <Badge>{conversation.messages.length}</Badge></h5>
-      </ListGroupItem>
+      <Link to={'/conversations/' + conversation.id} >
+        <ListGroupItem>
+          <h5>{conversation.users.map(this.renderUsernames)} <Badge>{conversation.messages.length}</Badge></h5>
+        </ListGroupItem>
+      </Link>
     )
   };
+
 
   render() {
     return (

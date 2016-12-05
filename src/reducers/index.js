@@ -16,3 +16,19 @@ const rootReducer =  combineReducers({
 });
 
 export default rootReducer;
+
+// const appReducer = combineReducers({
+//   posts: postsReducer,
+//   sessions: sessionsReducer,
+//   conversations: conversationsReducer,
+//   messages: messagesReducer,
+//   comments: commentsReducer,
+//   users: usersReducer
+// })
+//
+// const rootReducer = (state, action) => {
+//   if (action.type === 'LOG_OUT_SUCCESS') {
+//     state = undefined
+//   }
+//   return appReducer(state, action)
+// }

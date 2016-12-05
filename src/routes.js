@@ -7,42 +7,26 @@ import PostsNew from './components/posts_new'
 import PostsShow from './components/posts_show'
 import ConversationsIndex from './components/conversations_index'
 import ConversationsShow from './components/conversations_show'
-import CommentsNew from './components/comments_new'
-// import ItinerariesNew from './components/itineraries_new'
-// import LoginForm from './components/login_form'
-// import SignUpForm from './components/sign_up_form'
-// import ItinerariesUpdate from './components/itineraries_update'
-// <Route path="/login" component={LoginForm} />
-// <Route path="/signup" component={SignUpForm} />
-// <Route path="/posts" component={PostsIndex} >
-//   <Route path="/posts/new" component={PostsNew} onEnter={requireAuth} />
-//
-//   <Route path="/itineraries/:id/update" component={PostsUpdate} />
-// </Route>
-// <Route path="/posts/:id" component={PostsShow} >
-//   <Route path="/comments/new" component={CommentsNew} onEnter={requireAuth} />
-// </Route>
+import LogInForm from './components/login_form'
+import SignUpForm from './components/signup_form'
+import PostsEdit from './components/posts_edit'
 
 export default (
   <Route path="/" component={App} >
     <IndexRoute component={ PostsIndex } />
-    <Route path="/posts/new" component={ PostsNew } />
-    <Route path="/posts/:id" component={ PostsShow } >
-      <Route path="/posts/:id/newmessage" component={ CommentsNew } />
-    </Route>
-    <Route path="/conversations" component={ ConversationsIndex } >
-      <Route path="/conversations/:id" component={ ConversationsShow } />
+    <Route path="/login" component={ LogInForm } />
+    <Route path="/signup" component={ SignUpForm} />
+    <Route path="/posts/new" component={ PostsNew } onEnter={requireAuth} />
+    <Route path="/posts/:id" component={ PostsShow } />
+    <Route path="/posts/:id/edit" component={ PostsEdit } onEnter={requireAuth} />
+    <Route path="/conversations" component={ ConversationsIndex } onEnter={requireAuth} >
+      <Route path="/conversations/:id" component={ ConversationsShow } onEnter={requireAuth} />
     </Route>
   </Route>
 )
 
 function requireAuth(nextState, replace) {
   if (!sessionStorage.jwt){
-    replace({
-      pathname: '/login',
-      // state: {
-      //   nextPathname: nextState.location.pathname
-      // }
-    })
+    replace('/login')
   }
 }

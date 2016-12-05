@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import './index.css';
+import './index.css';
 import { Provider } from 'react-redux';
 import routes from './routes';
 import { Router, browserHistory } from 'react-router';
@@ -11,9 +11,13 @@ import { fetchPosts, fetchConversations, fetchUsers } from './actions'
 
 const store = createStore(rootReducer, applyMiddleware(ReduxPromise));
 
-store.dispatch( fetchPosts() );
-store.dispatch( fetchConversations() );
-store.dispatch( fetchUsers() );
+if (!!sessionStorage.jwt) {
+  store.dispatch( fetchPosts() );
+  store.dispatch( fetchConversations() );
+  store.dispatch( fetchUsers() );
+} else {
+  store.dispatch( fetchPosts() );
+}
 
 ReactDOM.render(
   <Provider store={store}>

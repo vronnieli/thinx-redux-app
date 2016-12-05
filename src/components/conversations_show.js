@@ -1,18 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+
 import { Grid, Col, Panel, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap';
 import MessagesNew from './messages_new'
 
 function ConversationsShow (props) {
 
   function renderUsernames(user) {
-    return user.username + ","
+    return user.username + " "
   };
 
   function renderMessages(message) {
     return (
-      <ListGroupItem>{message.user_id}: {message.content}</ListGroupItem>
+      <ListGroupItem>{message.username}: {message.content}</ListGroupItem>
     )
   }
 
@@ -27,7 +28,7 @@ function ConversationsShow (props) {
   return (
     <Grid>
       <Col xs={12} md={8} >
-      <Panel header={<h2><Glyphicon glyph="comment" />{conversation.users.map(renderUsernames)}</h2>}>
+      <Panel header={<h2><Glyphicon glyph="comment" /> {conversation.users.map(renderUsernames)}</h2>}>
         <ListGroup fill>
           {conversation.messages.map(renderMessages)}
           <MessagesNew conversationId={conversation.id}/>

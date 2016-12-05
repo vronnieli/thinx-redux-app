@@ -9,9 +9,6 @@ import { ListGroupItem, Form, FormGroup, FormControl, Button } from 'react-boots
 class MessagesNew extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      newMessage: false
-    };
     this.onSubmitHandler = this.onSubmitHandler.bind(this)
   };
 
@@ -19,11 +16,10 @@ class MessagesNew extends React.Component {
     event.preventDefault()
     const content = event.target[0].value
     const conversationId = this.props.conversationId
-    this.props.actions.createMessage({message: {content: content, user_id: 2, conversation_id: conversationId}})
+    this.props.actions.createMessage({message: {content: content, conversation_id: conversationId}})
     event.target[0].value = ""
-    this.setState({
-      newMessage: true
-    })
+    this.props.actions.fetchConversations()
+    this.props.actions.fetchUsers()
   };
 
   render() {

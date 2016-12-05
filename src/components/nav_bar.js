@@ -3,25 +3,38 @@ import {Link} from 'react-router';
 
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
 
-export default function NavBar(props){
+function NavBar (props) {
+
+  if (!!sessionStorage.jwt) {
+    var welcomeMessage = <Navbar.Text>Welcome back!</Navbar.Text>
+    var messagesIcon = <li><Link to='/conversations'><Glyphicon glyph="envelope" />  Messages</Link></li>
+    var signOutIcon = <MenuItem onClick={props.onLogOutHandler} href="/"><Glyphicon glyph="log-out" />  Sign Out</MenuItem>
+  } else {
+    var signInIcon = <li><Link to={'/login'}><Glyphicon glyph="log-in" />  Sign In</Link></li>
+    var signUpIcon = <li><Link to={'/signup'}><Glyphicon glyph="star" />  Sign Up</Link></li>
+  }
+
   return (
     <Navbar>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="/">What She THINX</a>
+          <Link to={'/'}>What She THINX</Link>
         </Navbar.Brand>
+        <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-        <Navbar.Text>
-          Hello
-        </Navbar.Text>
+        {welcomeMessage}
         <Nav pullRight>
-          <NavItem href="/conversations"><Glyphicon glyph="envelope" />  Messages</NavItem>
-          <NavDropdown id="dropdown" title={<Glyphicon glyph="user" />}>
-            <MenuItem href="/logout"><Glyphicon glyph="log-out" />  Logout</MenuItem>
+          {messagesIcon}
+          <NavDropdown id="dropdown" title={<Glyphicon glyph="user" open="false" />}>
+            {signInIcon}
+            {signUpIcon}
+            {signOutIcon}
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
   )
 };
+
+export default NavBar;

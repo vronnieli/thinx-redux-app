@@ -16,6 +16,6 @@ class CommentsNew extends React.Component {
       </Form>
     )
   }
-}
+};
 
 export default CommentsNew
