@@ -26,7 +26,7 @@ export default (
 )
 
 function requireAuth(nextState, replace) {
-  if (!sessionStorage.jwt){
+  if (!sessionStorage.jwt || (sessionStorage.jwt == "undefined")){
     replace('/login')
   }
 }
