@@ -8,7 +8,7 @@ function PostsIndex (props) {
   const renderPosts = (post) => {
     return (
       <Col xs={6} md={4}>
-        <Thumbnail src={"https://s3.us-east-2.amazonaws.com/" + post.image_url_medium} alt="242x200" >
+        <Thumbnail src={"https://s3.us-east-2.amazonaws.com/" + post.image_url_medium} >
           <h3>{post.title} <Badge>{post.comments.length}</Badge></h3>
           <p>{post.content}</p>
           <p>by {post.username}</p>

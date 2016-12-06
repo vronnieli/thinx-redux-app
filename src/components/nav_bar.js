@@ -5,7 +5,7 @@ import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bo
 
 function NavBar (props) {
 
-  if (!!sessionStorage.jwt) {
+  if (!!sessionStorage.jwt && (sessionStorage.jwt != "undefined")) {
     var welcomeMessage = <Navbar.Text>Welcome back!</Navbar.Text>
     var messagesIcon = <li><Link to='/conversations'><Glyphicon glyph="envelope" />  Messages</Link></li>
     var signOutIcon = <MenuItem onClick={props.onLogOutHandler} href="/"><Glyphicon glyph="log-out" />  Sign Out</MenuItem>
